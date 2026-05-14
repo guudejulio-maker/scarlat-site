@@ -675,12 +675,41 @@
       calcular();
     }
 
+    const camadas = {
+      ouro: [
+        {v:'1',l:'1 milésimo'},{v:'2',l:'2 milésimos'},{v:'3',l:'3 milésimos'},
+        {v:'4',l:'4 milésimos'},{v:'5',l:'5 milésimos'},{v:'6',l:'6 milésimos'},
+        {v:'8',l:'8 milésimos'},{v:'10',l:'10 milésimos'}
+      ],
+      prata: [
+        {v:'10',l:'10 milésimos'},{v:'20',l:'20 milésimos'},{v:'30',l:'30 milésimos'},
+        {v:'40',l:'40 milésimos'},{v:'50',l:'50 milésimos'},{v:'70',l:'70 milésimos'},
+        {v:'100',l:'100 milésimos'}
+      ],
+      diamante: [{v:'1',l:'Camada única'}]
+    };
+
     function atualizarBadge() {
       const v = document.getElementById('tipo-banho').value;
       const badge = document.getElementById('banho-badge');
       const nomes = { ouro: 'Ouro', prata: 'Prata', diamante: 'Diamante' };
       badge.textContent = nomes[v];
       badge.className = 'banho-badge badge-' + v;
+
+      // Atualiza opções de milésimos
+      const sel = document.getElementById('milesimos');
+      sel.innerHTML = '';
+      camadas[v].forEach((c, i) => {
+        const opt = document.createElement('option');
+        opt.value = c.v;
+        opt.textContent = c.l;
+        if (i === 0) opt.selected = true;
+        sel.appendChild(opt);
+      });
+
+      // Desabilita select se diamante (camada única)
+      sel.disabled = v === 'diamante';
+      calcular();
     }
 
     function fmt(v) {
