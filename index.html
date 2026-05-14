@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scarlat Galvânica — Banhos em Ouro, Prata e Diamante</title>
+  <meta name="description" content="Há mais de 10 anos referência em galvanoplastia. Banhos exclusivos em ouro, prata, diamante e palladium em Limeira-SP."/>
+  <link rel="icon" href="./assets/logo/favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X66RM981Y4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-X66RM981Y4');</script>
+
+  <style>
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-pale: #F7F0E3;
+      --navy: #0B1221;
+      --navy-2: #131D30;
+      --dark: #080C14;
+      --text: #1A1A16;
+      --text-2: #5A5848;
+      --text-3: #9A9480;
+      --white: #FFFFFF;
+      --off-white: #F9F7F3;
+      --border: rgba(201,169,110,0.2);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Montserrat',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;}
+
+    /* ── NAVBAR ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:1.25rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(8,12,20,0.97);
+      border-bottom:0.5px solid var(--border);
+      transition:padding 0.4s;
+    }
+    nav.scrolled{
+      padding:0.85rem 3rem;
+    }
+    .nav-logo img{height:36px;}
+    .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+    .nav-links a{
+      font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+      color:rgba(255,255,255,0.65);text-decoration:none;
+      transition:color 0.2s;
+    }
+    .nav-links a:hover{color:var(--gold);}
+    .nav-cta{
+      background:var(--gold);color:var(--dark)!important;
+      padding:0.5rem 1.25rem;border-radius:2px;
+      font-weight:600!important;letter-spacing:0.08em!important;
+    }
+    .nav-cta:hover{background:var(--gold-light)!important;color:var(--dark)!important;}
+    .nav-social{display:flex;gap:1rem;align-items:center;}
+    .nav-social a{color:rgba(255,255,255,0.5);transition:color 0.2s;}
+    .nav-social a:hover{color:var(--gold);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+    .hamburger span{width:24px;height:1.5px;background:var(--white);transition:all 0.3s;}
+    @media(max-width:900px){
+      .nav-links{
+        display:none;flex-direction:column;gap:0;
+        position:fixed;top:0;left:0;right:0;bottom:0;
+        background:var(--dark);padding:6rem 3rem 3rem;
+        align-items:flex-start;
+      }
+      .nav-links.open{display:flex;}
+      .nav-links li{border-bottom:0.5px solid var(--border);width:100%;padding:1.25rem 0;}
+      .nav-links a{font-size:13px;}
+      .nav-social{display:none;}
+      .hamburger{display:flex;z-index:200;}
+    }
+    @media(max-width:600px){nav{padding:1rem 1.5rem;}}
+
+    /* ── HERO ── */
+    .hero{
+      position:relative;height:100vh;min-height:600px;
+      display:flex;align-items:center;
+      overflow:hidden;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+      background:url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-bg::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(105deg,rgba(8,12,20,0.88) 40%,rgba(8,12,20,0.3) 100%);
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      max-width:680px;padding:0 3rem;
+      animation:fadeUp 1s ease both;
+    }
+    .hero-badge{
+      display:inline-block;
+      border:0.5px solid var(--gold);
+      color:var(--gold);
+      font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+      padding:6px 16px;margin-bottom:1.75rem;
+    }
+    .hero h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3rem,6vw,5.5rem);
+      font-weight:300;line-height:1.05;
+      margin-bottom:1.5rem;
+    }
+    .hero h1 em{color:var(--gold);font-style:italic;}
+    .hero p{
+      font-size:14px;letter-spacing:0.04em;
+      color:rgba(255,255,255,0.6);line-height:1.8;
+      max-width:440px;margin-bottom:2.5rem;
+    }
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-primary{
+      background:var(--gold);color:var(--dark);
+      padding:0.9rem 2rem;font-size:11px;
+      letter-spacing:0.15em;text-transform:uppercase;font-weight:600;
+      text-decoration:none;border:none;cursor:pointer;
+      transition:background 0.2s,transform 0.2s;display:inline-block;
+    }
+    .btn-primary:hover{background:var(--gold-light);transform:translateY(-1px);}
+    .btn-outline{
+      border:0.5px solid rgba(255,255,255,0.4);color:var(--white);
+      padding:0.9rem 2rem;font-size:11px;
+      letter-spacing:0.15em;text-transform:uppercase;font-weight:400;
+      text-decoration:none;transition:border-color 0.2s,color 0.2s;display:inline-block;
+    }
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+    .hero-scroll{
+      position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+      animation:bounce 2s infinite;
+    }
+    .hero-scroll::after{
+      content:'';width:1px;height:40px;background:linear-gradient(var(--gold),transparent);
+    }
+    @media(max-width:600px){
+      .hero-content{padding:0 1.5rem;}
+      .hero h1{font-size:3rem;}
+    }
+
+    /* ── NÚMEROS ── */
+    .numbers{
+      background:var(--navy);
+      padding:4rem 3rem;
+      display:grid;grid-template-columns:repeat(4,1fr);
+      border-top:0.5px solid var(--border);
+      border-bottom:0.5px solid var(--border);
+    }
+    .number-item{
+      text-align:center;padding:1rem;
+      border-right:0.5px solid var(--border);
+    }
+    .number-item:last-child{border-right:none;}
+    .number-val{
+      font-family:'Cormorant Garamond',serif;
+      font-size:3rem;font-weight:300;color:var(--gold);
+      line-height:1;margin-bottom:0.5rem;
+    }
+    .number-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+    @media(max-width:700px){
+      .numbers{grid-template-columns:repeat(2,1fr);padding:2rem 1.5rem;}
+      .number-item:nth-child(2){border-right:none;}
+      .number-item:nth-child(3){border-right:0.5px solid var(--border);}
+      .number-item:nth-child(1),.number-item:nth-child(2){border-bottom:0.5px solid var(--border);}
+    }
+
+    /* ── SEÇÃO GENÉRICA ── */
+    section{padding:6rem 3rem;}
+    @media(max-width:600px){section{padding:4rem 1.5rem;}}
+    .section-label{
+      font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1rem;
+    }
+    .section-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,4vw,3.2rem);font-weight:300;
+      line-height:1.15;
+    }
+    .section-title em{color:var(--gold);font-style:italic;}
+
+    /* ── SOBRE NÓS ── */
+    #sobrenos{background:var(--dark);}
+    .sobre-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+      align-items:center;max-width:1200px;margin:0 auto;
+    }
+    .sobre-img{position:relative;}
+    .sobre-img img{width:100%;height:620px;object-fit:cover;object-position:top;}
+    .sobre-img-badge{
+      position:absolute;bottom:-2rem;right:-2rem;
+      background:var(--gold);color:var(--dark);
+      padding:1.5rem 2rem;text-align:center;
+    }
+    .sobre-img-badge .n{
+      font-family:'Cormorant Garamond',serif;
+      font-size:3rem;font-weight:300;line-height:1;display:block;
+    }
+    .sobre-img-badge .l{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;}
+    .sobre-text{padding-left:1rem;}
+    .sobre-text .section-title{margin-bottom:1.75rem;}
+    .sobre-text p{
+      color:rgba(255,255,255,0.55);font-size:14px;line-height:1.9;
+      margin-bottom:1.25rem;
+    }
+    .sobre-diferenciais{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem;
+    }
+    .diferencial{
+      border:0.5px solid var(--border);padding:1.25rem;
+    }
+    .diferencial-icon{color:var(--gold);font-size:20px;margin-bottom:0.5rem;}
+    .diferencial-title{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.35rem;}
+    .diferencial-desc{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;}
+    @media(max-width:900px){
+      .sobre-grid{grid-template-columns:1fr;gap:3rem;}
+      .sobre-img img{height:400px;}
+      .sobre-img-badge{right:1rem;bottom:-1rem;}
+      .sobre-text{padding-left:0;}
+    }
+
+    /* ── SERVIÇOS ── */
+    #servicos{background:var(--navy);}
+    .servicos-header{max-width:1200px;margin:0 auto 4rem;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;}
+    .servicos-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1.5px;max-width:1200px;margin:0 auto;
+    }
+    .servico-card{
+      position:relative;overflow:hidden;aspect-ratio:3/4;
+      cursor:default;
+    }
+    .servico-card img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform 0.6s ease;
+    }
+    .servico-card:hover img{transform:scale(1.05);}
+    .servico-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(8,12,20,0.92) 0%,rgba(8,12,20,0.2) 60%,transparent 100%);
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:2rem;
+    }
+    .servico-tag{
+      font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:0.5rem;
+    }
+    .servico-name{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.75rem;font-weight:300;line-height:1.2;
+      margin-bottom:0.75rem;
+    }
+    .servico-desc{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.7;}
+    @media(max-width:700px){
+      .servicos-grid{grid-template-columns:1fr;}
+      .servico-card{aspect-ratio:4/3;}
+    }
+
+    /* ── CALCULADORA CTA ── */
+    .calc-cta{
+      background:var(--dark);
+      padding:5rem 3rem;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .calc-cta-inner{
+      max-width:900px;width:100%;
+      border:0.5px solid var(--border);
+      padding:4rem;
+      display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;
+      position:relative;overflow:hidden;
+    }
+    .calc-cta-inner::before{
+      content:'';position:absolute;top:-60px;right:-60px;
+      width:300px;height:300px;border-radius:50%;
+      background:radial-gradient(circle,rgba(201,169,110,0.08),transparent 70%);
+    }
+    .calc-cta-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .calc-cta-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;
+      line-height:1.2;margin-bottom:1rem;
+    }
+    .calc-cta-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8;}
+    @media(max-width:700px){
+      .calc-cta-inner{grid-template-columns:1fr;padding:2.5rem 2rem;}
+      .calc-cta{padding:4rem 1.5rem;}
+    }
+
+    /* ── MEIO AMBIENTE ── */
+    #meio-ambiente{background:var(--navy-2);}
+    .meio-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+      align-items:center;max-width:1200px;margin:0 auto;
+    }
+    .meio-img img{width:100%;height:480px;object-fit:cover;}
+    .meio-text .section-title{margin-bottom:1.75rem;}
+    .meio-text p{
+      color:rgba(255,255,255,0.55);font-size:14px;
+      line-height:1.9;margin-bottom:1.25rem;
+    }
+    .meio-pills{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2rem;}
+    .pill{
+      border:0.5px solid var(--border);
+      color:var(--gold);font-size:10px;
+      letter-spacing:0.12em;text-transform:uppercase;
+      padding:6px 14px;
+    }
+    @media(max-width:900px){
+      .meio-grid{grid-template-columns:1fr;gap:3rem;}
+      .meio-img img{height:300px;}
+    }
+
+    /* ── CONTATO ── */
+    #contato{
+      background:var(--dark);
+      text-align:center;
+      padding:7rem 3rem;
+    }
+    .contato-inner{max-width:600px;margin:0 auto;}
+    .contato-inner .section-title{margin-bottom:1rem;}
+    .contato-inner p{
+      color:rgba(255,255,255,0.5);font-size:14px;
+      line-height:1.8;margin-bottom:2.5rem;
+    }
+    .contato-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .contato-info{
+      display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;
+      margin-top:4rem;padding-top:3rem;
+      border-top:0.5px solid var(--border);
+    }
+    .contato-info-item{text-align:center;}
+    .contato-info-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+    .contato-info-val{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;}
+    .contato-info-val a{color:rgba(255,255,255,0.6);text-decoration:none;}
+    .contato-info-val a:hover{color:var(--gold);}
+
+    /* ── FOOTER ── */
+    footer{
+      background:var(--dark);
+      padding:3rem;
+      border-top:0.5px solid var(--border);
+      display:flex;flex-direction:column;align-items:center;
+      gap:1.25rem;text-align:center;
+    }
+    .footer-logo img{height:28px;filter:brightness(0) invert(1);opacity:0.6;}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,0.3);text-align:center;}
+    .footer-social{display:flex;gap:1rem;}
+    .footer-social a{color:rgba(255,255,255,0.3);transition:color 0.2s;}
+    .footer-social a:hover{color:var(--gold);}
+    @media(max-width:600px){footer{flex-direction:column;align-items:center;padding:2rem 1.5rem;text-align:center;}}
+
+    /* ── WHATSAPP ── */
+    .wa-btn{
+      position:fixed;bottom:2rem;right:2rem;z-index:99;
+      width:54px;height:54px;border-radius:50%;
+      background:#25D366;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,0.4);
+      transition:transform 0.2s;
+    }
+    .wa-btn:hover{transform:scale(1.08);}
+    .wa-btn svg{width:26px;height:26px;fill:white;}
+    @media(max-width:600px){.wa-btn{bottom:5rem;right:1rem;}}
+
+    /* ── ANIMAÇÕES ── */
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(30px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    @keyframes bounce{
+      0%,100%{transform:translateX(-50%) translateY(0);}
+      50%{transform:translateX(-50%) translateY(6px);}
+    }
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+  </style>
+</head>
+<body>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/5519997323868" target="_blank" class="wa-btn" aria-label="WhatsApp">
+  <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+  </svg>
+</a>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo"><img src="./assets/logo/logo-scarlat-horizontal-01.png" alt="Scarlat Galvânica"/></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sobrenos">Sobre Nós</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#meio-ambiente">Meio Ambiente</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="./calculadora/" class="nav-cta">Calculadora</a></li>
+  </ul>
+  <div class="nav-social">
+    <a href="https://www.instagram.com/scarlatgalvanica/" target="_blank" aria-label="Instagram">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+    </a>
+    <a href="https://www.facebook.com/people/Scarlat-G%C3%A2lvanica/61559583669381/" target="_blank" aria-label="Facebook">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+    </a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Galvanoplastia de Excelência</div>
+    <h1>Banhos que<br/><em>transformam</em><br/>peças em arte</h1>
+    <p>Há mais de 10 anos, a Scarlat Galvânica é referência em banhos de ouro, prata, diamante e palladium para o setor de semijoias e acessórios.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5519997323868" target="_blank" class="btn-primary">Solicitar Orçamento</a>
+      <a href="./calculadora/" class="btn-outline">Calculadora Gratuita</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Rolar</div>
+</section>
+
+<!-- NÚMEROS -->
+<div class="numbers reveal">
+  <div class="number-item"><div class="number-val">10+</div><div class="number-label">Anos de Experiência</div></div>
+  <div class="number-item"><div class="number-val">100%</div><div class="number-label">Água Reutilizada</div></div>
+  <div class="number-item"><div class="number-val">4</div><div class="number-label">Tipos de Banho</div></div>
+  <div class="number-item"><div class="number-val">SP</div><div class="number-label">Limeira — Brasil</div></div>
+</div>
+
+<!-- SOBRE NÓS -->
+<section id="sobrenos">
+  <div class="sobre-grid">
+    <div class="sobre-img reveal">
+      <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=900&q=80" alt="Modelo com semijoias Scarlat"/>
+      <div class="sobre-img-badge">
+        <span class="n">10</span>
+        <span class="l">anos de mercado</span>
+      </div>
+    </div>
+    <div class="sobre-text reveal">
+      <div class="section-label">Sobre Nós</div>
+      <h2 class="section-title">Qualidade e <em>inovação</em> em cada detalhe</h2>
+      <p>Com mais de 10 anos de experiência, a Scarlat Galvânica é líder em qualidade e inovação no setor de galvanoplastia. Nosso compromisso é oferecer serviços excepcionais com um toque personalizado, atendendo às necessidades específicas de cada cliente.</p>
+      <p>Priorizamos a agilidade, a transparência e a justa relação de custos, sempre buscando superar expectativas e garantir a satisfação total. Nossa equipe altamente capacitada está pronta para transformar suas peças com acabamento de excelência.</p>
+      <div class="sobre-diferenciais">
+        <div class="diferencial">
+          <div class="diferencial-icon">◆</div>
+          <div class="diferencial-title">Agilidade</div>
+          <div class="diferencial-desc">Prazos cumpridos com precisão e cuidado</div>
+        </div>
+        <div class="diferencial">
+          <div class="diferencial-icon">◆</div>
+          <div class="diferencial-title">Transparência</div>
+          <div class="diferencial-desc">Preços justos e comunicação clara</div>
+        </div>
+        <div class="diferencial">
+          <div class="diferencial-icon">◆</div>
+          <div class="diferencial-title">Qualidade</div>
+          <div class="diferencial-desc">Acabamento premium em cada peça</div>
+        </div>
+        <div class="diferencial">
+          <div class="diferencial-icon">◆</div>
+          <div class="diferencial-title">Sustentável</div>
+          <div class="diferencial-desc">100% da água reutilizada no processo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="servicos-header reveal">
+    <div>
+      <div class="section-label">Serviços</div>
+      <h2 class="section-title">Nossos <em>banhos</em><br/>exclusivos</h2>
+    </div>
+    <a href="https://wa.me/5519997323868" target="_blank" class="btn-outline">Solicitar Orçamento</a>
+  </div>
+  <div class="servicos-grid reveal">
+    <div class="servico-card">
+      <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88578?w=800&q=80" alt="Banho de Ouro"/>
+      <div class="servico-overlay">
+        <div class="servico-tag">01 — Banho</div>
+        <div class="servico-name">Ouro</div>
+        <div class="servico-desc">De 1 a 10 milésimos. Acabamento nobre e duradouro para semijoias e acessórios premium.</div>
+      </div>
+    </div>
+    <div class="servico-card">
+      <img src="https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=800&q=80" alt="Banho de Prata"/>
+      <div class="servico-overlay">
+        <div class="servico-tag">02 — Banho</div>
+        <div class="servico-name">Prata</div>
+        <div class="servico-desc">Acabamento brilhante e sofisticado. Ideal para peças modernas e contemporâneas.</div>
+      </div>
+    </div>
+    <div class="servico-card">
+      <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" alt="Banho de Diamante e Palladium"/>
+      <div class="servico-overlay">
+        <div class="servico-tag">03 — Banho</div>
+        <div class="servico-name">Diamante &amp; Palladium</div>
+        <div class="servico-desc">Acabamentos exclusivos para peças que exigem o mais alto padrão de qualidade.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULADORA CTA -->
+<div class="calc-cta reveal">
+  <div class="calc-cta-inner">
+    <div>
+      <div class="calc-cta-label">Ferramenta gratuita</div>
+      <h3 class="calc-cta-title">Calcule o custo real<br/>de cada peça</h3>
+      <p class="calc-cta-desc">Nossa calculadora gratuita considera banho, bruto, verniz, frete, taxas e margem de lucro — tudo em segundos, para você precificar com confiança.</p>
+    </div>
+    <a href="./calculadora/" class="btn-primary" style="white-space:nowrap;">Usar Calculadora</a>
+  </div>
+</div>
+
+<!-- MEIO AMBIENTE -->
+<section id="meio-ambiente">
+  <div class="meio-grid">
+    <div class="meio-img reveal">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80" alt="Sustentabilidade Scarlat"/>
+    </div>
+    <div class="meio-text reveal">
+      <div class="section-label">Meio Ambiente</div>
+      <h2 class="section-title">Galvanoplastia <em>sustentável</em></h2>
+      <p>Na Scarlat Galvânica, a sustentabilidade não é tendência — é compromisso. Reutilizamos 100% da água em nossos processos através de um avançado sistema de troca iônica e adotamos geração de energia fotovoltaica.</p>
+      <p>Garantimos o tratamento adequado da água antes do descarte e o uso consciente de produtos químicos para evitar a poluição ambiental. Possuímos todas as licenças necessárias dos órgãos competentes.</p>
+      <div class="meio-pills">
+        <span class="pill">Água Reutilizada</span>
+        <span class="pill">Energia Solar</span>
+        <span class="pill">Tratamento de Efluentes</span>
+        <span class="pill">Licenças Ambientais</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contato-inner reveal">
+    <div class="section-label">Contato</div>
+    <h2 class="section-title">Pronto para <em>elevar</em><br/>suas peças?</h2>
+    <p>Entre em contato e descubra como a Scarlat pode transformar sua produção com qualidade, agilidade e preço justo.</p>
+    <div class="contato-btns">
+      <a href="https://wa.me/5519997323868" target="_blank" class="btn-primary">Falar pelo WhatsApp</a>
+      <a href="mailto:atendimento@scarlatgalvanica.com.br" class="btn-outline">Enviar E-mail</a>
+    </div>
+    <div class="contato-info">
+      <div class="contato-info-item">
+        <div class="contato-info-label">E-mail</div>
+        <div class="contato-info-val"><a href="mailto:atendimento@scarlatgalvanica.com.br">atendimento@scarlatgalvanica.com.br</a></div>
+      </div>
+      <div class="contato-info-item">
+        <div class="contato-info-label">Horário</div>
+        <div class="contato-info-val">Seg–Qui: 07h30 às 17h30<br/>Sex: 07h30 às 16h30</div>
+      </div>
+      <div class="contato-info-item">
+        <div class="contato-info-label">Endereço</div>
+        <div class="contato-info-val"><a href="https://www.google.com.br/maps/place/R.+Cap.+Paulo+Sim%C3%B5es,+110+-+Vila+Paulista,+Limeira+-+SP" target="_blank">R. Cap. Paulo Simões, 110<br/>Vila Paulista — Limeira/SP</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><img src="./assets/logo/logo-scarlat-horizontal-03.png" alt="Scarlat"/></div>
+  <div class="footer-copy">© 2025 Scarlat Galvânica — Todos os direitos reservados</div>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/scarlatgalvanica/" target="_blank" aria-label="Instagram">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+    </a>
+    <a href="https://www.facebook.com/people/Scarlat-G%C3%A2lvanica/61559583669381/" target="_blank" aria-label="Facebook">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Menu mobile
+  function toggleMenu(){
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // Reveal on scroll
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
