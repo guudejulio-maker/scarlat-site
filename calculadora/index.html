@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Precificação — Scarlat Galvânica</title>
+  <meta name="description" content="Calcule gratuitamente o custo real das suas peças folheadas. Banho de ouro, prata e diamante, verniz, frete, taxas e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #B8860B;
+      --gold-light: #F5E6B8;
+      --gold-pale: #FBF5E0;
+      --gold-dark: #7A5800;
+      --silver: #8C8C8C;
+      --diamond: #4A7FAB;
+      --bg: #FAFAF7;
+      --card: #FFFFFF;
+      --border: #E8E4D8;
+      --text: #1A1A16;
+      --text-2: #5A5848;
+      --text-3: #9A9480;
+      --green: #2D6A4F;
+      --green-light: #E8F5EE;
+      --green-border: #A8D5BB;
+      --purple: #534AB7;
+      --purple-light: #EEEDFE;
+      --orange: #8B4513;
+      --orange-light: #FFF0E0;
+      --red-light: #FFF0F0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--text);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-header a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 13px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .site-header a:hover { opacity: 1; }
+    .header-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--text);
+      padding: 3.5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(184,134,11,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(184,134,11,0.15);
+      border: 0.5px solid rgba(184,134,11,0.4);
+      color: var(--gold-light);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--gold-light); }
+    .hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 15px;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* DECORATIVE DIVIDER */
+    .divider-gold {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0;
+    }
+
+    /* MAIN LAYOUT */
+    .main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* SECTION CARD */
+    .card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+    }
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .icon-gold { background: var(--gold-pale); }
+    .icon-purple { background: var(--purple-light); }
+    .icon-green { background: var(--green-light); }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .card-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    /* FIELDS */
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 500px) { .field-grid { grid-template-columns: 1fr; } }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+    .field label .badge {
+      font-size: 9px;
+      background: var(--orange-light);
+      color: var(--orange);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 5px;
+      text-transform: none;
+      letter-spacing: 0;
+      vertical-align: middle;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .prefix {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px; color: var(--text-3);
+      pointer-events: none;
+    }
+    .input-wrap .suffix {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px; color: var(--text-3);
+      pointer-events: none; white-space: nowrap;
+    }
+    .input-wrap input,
+    .input-wrap select {
+      width: 100%; height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    .input-wrap input { padding: 0 12px; }
+    .input-wrap.has-prefix input { padding-left: 28px; }
+    .input-wrap.has-suffix input { padding-right: 52px; }
+    .input-wrap input:focus,
+    .input-wrap select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
+    }
+    .input-wrap select { padding: 0 12px; cursor: pointer; }
+    .hint { font-size: 11px; color: var(--text-3); line-height: 1.5; }
+
+    /* CONVERSION BOX */
+    .conv-box {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold-pale);
+      border: 0.5px solid rgba(184,134,11,0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--gold-dark);
+    }
+    .conv-box.visible { display: flex; }
+    .conv-box strong { font-weight: 500; }
+
+    .verniz-conv {
+      background: var(--purple-light);
+      border-color: rgba(83,74,183,0.25);
+      color: var(--purple);
+    }
+
+    /* TOGGLE SWITCH */
+    .toggle-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      cursor: pointer; user-select: none;
+    }
+    .toggle {
+      width: 40px; height: 22px; border-radius: 11px;
+      background: var(--border);
+      position: relative; transition: background 0.2s;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .toggle.on { background: var(--gold); }
+    .toggle::after {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; top: 2px; left: 2px;
+      transition: left 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .toggle.on::after { left: 20px; }
+    .toggle-info { flex: 1; }
+    .toggle-title {
+      font-size: 14px; font-weight: 500; color: var(--text);
+    }
+    .toggle-desc { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .tag-opt {
+      display: inline-block;
+      font-size: 10px; background: var(--green-light);
+      color: var(--green); padding: 1px 7px; border-radius: 4px;
+      margin-left: 6px; vertical-align: middle;
+    }
+    .toggle-body { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .toggle-body.open { display: block; }
+
+    /* MARKUP INFO */
+    .markup-info {
+      display: none;
+      background: var(--orange-light);
+      border: 0.5px solid rgba(139,69,19,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--orange);
+      line-height: 1.6;
+    }
+    .markup-info.visible { display: block; }
+
+    /* RESULTADO */
+    .result-section { margin-top: 1.5rem; }
+
+    .result-mini-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .mini-card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+    .mini-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); margin-bottom: 4px; }
+    .mini-value { font-size: 20px; font-weight: 500; color: var(--text); }
+
+    .breakdown {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .breakdown-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 11px 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      gap: 12px;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-label { font-size: 13px; color: var(--text-2); flex: 1; line-height: 1.4; }
+    .breakdown-val { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
+    .breakdown-total {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 1.25rem;
+      background: var(--bg);
+      font-weight: 500; font-size: 15px;
+    }
+
+    .final-card {
+      background: var(--text);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-card::before {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(184,134,11,0.2), transparent 70%);
+      pointer-events: none;
+    }
+    .final-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 6px;
+    }
+    .final-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px; font-weight: 500;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .final-sub { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    /* PLACEHOLDER */
+    .placeholder {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-3);
+    }
+    .placeholder-icon { font-size: 40px; margin-bottom: 12px; }
+    .placeholder p { font-size: 14px; line-height: 1.6; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 12px;
+      color: var(--text-3);
+      border-top: 0.5px solid var(--border);
+    }
+    .footer a { color: var(--gold); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* BANHO BADGE */
+    .banho-badge {
+      display: inline-block; font-size: 11px;
+      padding: 2px 9px; border-radius: 20px;
+      margin-left: 8px; vertical-align: middle;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .badge-ouro { background: var(--gold-pale); color: var(--gold-dark); }
+    .badge-prata { background: #F0F0EE; color: var(--silver); }
+    .badge-diamante { background: #EBF3FB; color: var(--diamond); }
+
+    /* COLOR HELPERS */
+    .c-verniz { color: var(--purple); }
+    .c-markup { color: var(--orange); }
+    .c-lucro  { color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/">← Voltar ao site</a>
+    <div class="header-logo">Scarlat Galvânica</div>
+    <span></span>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge">Ferramenta gratuita</div>
+    <h1>Calculadora de<br><span>Precificação de Peças</span></h1>
+    <p>Descubra o custo real de cada peça folheada — banho, bruto, verniz, frete e taxas — tudo em segundos.</p>
+  </section>
+  <div class="divider-gold"></div>
+
+  <main class="main">
+
+    <!-- BLOCO 1: BANHO -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon icon-gold">✦</div>
+        <div>
+          <div class="card-title">Custo do banho <span id="banho-badge" class="banho-badge badge-ouro">Ouro</span></div>
+          <div class="card-sub">Preencha com os valores que você pagou</div>
+        </div>
+      </div>
+
+      <div class="field-grid" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Tipo de banho</label>
+          <div class="input-wrap">
+            <select id="tipo-banho" onchange="calcular(); atualizarBadge()">
+              <option value="ouro">Ouro</option>
+              <option value="prata">Prata</option>
+              <option value="diamante">Diamante</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Camada <span style="font-size:10px;color:var(--text-3);text-transform:none;letter-spacing:0;">(informativo)</span></label>
+          <div class="input-wrap">
+            <select id="milesimos" onchange="calcular()">
+              <option value="1">1 milésimo</option>
+              <option value="2">2 milésimos</option>
+              <option value="3" selected>3 milésimos</option>
+              <option value="4">4 milésimos</option>
+              <option value="5">5 milésimos</option>
+              <option value="6">6 milésimos</option>
+              <option value="8">8 milésimos</option>
+              <option value="10">10 milésimos</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-grid" style="margin-bottom:4px;">
+        <div class="field">
+          <label>Peso da peça</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="peso" placeholder="Ex: 5,2" min="0" step="0.1" oninput="calcular()">
+            <span class="suffix">g</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Valor do banho pago</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="preco-kg" placeholder="Ex: 3650" min="0" step="1" oninput="calcular()">
+            <span class="suffix">R$/kg</span>
+          </div>
+          <div class="hint">Já inclui os milésimos. Convertemos para grama automaticamente.</div>
+        </div>
+      </div>
+
+      <div class="conv-box" id="conv-banho">
+        <span>⇄</span>
+        <span>R$ <strong id="cb-kg">0</strong>/kg ÷ 1.000 = R$ <strong id="cb-g">0,0000</strong>/g × <strong id="cb-peso">0</strong>g = <strong>R$ <span id="cb-total">0,00</span> de banho</strong></span>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="field">
+          <label>Custo do bruto — peça crua antes do banho</label>
+          <div class="input-wrap has-prefix">
+            <span class="prefix">R$</span>
+            <input type="number" id="custo-bruto" placeholder="Ex: 12,00" min="0" step="0.01" oninput="calcular()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERNIZ -->
+    <div class="card">
+      <div class="toggle-row" onclick="toggleBloco('verniz')">
+        <div class="toggle" id="tgl-verniz"></div>
+        <div class="toggle-info">
+          <div class="toggle-title">💧 Verniz <span class="tag-opt">opcional</span></div>
+          <div class="toggle-desc">A peça vai receber verniz após o banho?</div>
+        </div>
+      </div>
+      <div class="toggle-body" id="body-verniz">
+        <div class="field" style="max-width:280px;">
+          <label>Valor do verniz pago</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="verniz-kg" placeholder="Ex: 800" min="0" step="1" oninput="calcular()">
+            <span class="suffix">R$/kg</span>
+          </div>
+          <div class="hint">Mesmo peso da peça será usado para o cálculo.</div>
+        </div>
+        <div class="conv-box verniz-conv" id="conv-verniz">
+          <span>💧</span>
+          <span>R$ <strong id="cv-kg">0</strong>/kg ÷ 1.000 = R$ <strong id="cv-g">0,0000</strong>/g × <strong id="cv-peso">0</strong>g = <strong>R$ <span id="cv-total">0,00</span> de verniz</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRETE -->
+    <div class="card">
+      <div class="toggle-row" onclick="toggleBloco('frete')">
+        <div class="toggle" id="tgl-frete"></div>
+        <div class="toggle-info">
+          <div class="toggle-title">🚚 Frete do lote <span class="tag-opt">opcional</span></div>
+          <div class="toggle-desc">Dividir o custo do frete entre as peças do lote</div>
+        </div>
+      </div>
+      <div class="toggle-body" id="body-frete">
+        <div class="field-grid">
+          <div class="field">
+            <label>Valor total do frete</label>
+            <div class="input-wrap has-prefix">
+              <span class="prefix">R$</span>
+              <input type="number" id="frete-total" placeholder="Ex: 45,00" min="0" step="0.01" oninput="calcular()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Qtd. de peças no lote</label>
+            <div class="input-wrap">
+              <input type="number" id="frete-qtd" placeholder="Ex: 30" min="1" step="1" oninput="calcular()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOS OPERACIONAIS -->
+    <div class="card">
+      <div class="toggle-row" onclick="toggleBloco('op')">
+        <div class="toggle" id="tgl-op"></div>
+        <div class="toggle-info">
+          <div class="toggle-title">🛍️ Custos operacionais <span class="tag-opt">opcional</span></div>
+          <div class="toggle-desc">Embalagem, marketing, comissão e taxas</div>
+        </div>
+      </div>
+      <div class="toggle-body" id="body-op">
+        <div class="field-grid" style="margin-bottom:14px;">
+          <div class="field">
+            <label>Cartela / etiqueta</label>
+            <div class="input-wrap has-prefix">
+              <span class="prefix">R$</span>
+              <input type="number" id="cartela" placeholder="Ex: 0,50" min="0" step="0.01" oninput="calcular()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Saquinho / embalagem</label>
+            <div class="input-wrap has-prefix">
+              <span class="prefix">R$</span>
+              <input type="number" id="saquinho" placeholder="Ex: 0,30" min="0" step="0.01" oninput="calcular()">
+            </div>
+          </div>
+        </div>
+        <div class="field-grid" style="margin-bottom:14px;">
+          <div class="field">
+            <label>Marketing / fotos por peça</label>
+            <div class="input-wrap has-prefix">
+              <span class="prefix">R$</span>
+              <input type="number" id="mkt" placeholder="Ex: 0,20" min="0" step="0.01" oninput="calcular()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Comissão do vendedor <span class="badge">sobre o preço final</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="comissao" placeholder="Ex: 5" min="0" max="99" step="0.5" oninput="calcular()">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Taxa cartão / Pix <span class="badge">sobre o preço final</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="taxa-cartao" placeholder="Ex: 3" min="0" max="99" step="0.1" oninput="calcular()">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Imposto / simples nacional <span class="badge">sobre o preço final</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="imposto" placeholder="Ex: 6" min="0" max="99" step="0.1" oninput="calcular()">
+              <span class="suffix">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="markup-info" id="markup-info">
+          ⚠️ Comissão, taxa de cartão e imposto incidem sobre o preço final de venda. O sistema calcula pelo divisor correto para que, ao descontar essas taxas, sobre exatamente o seu custo. Exemplo: 11% → custo ÷ 0,89 (e não × 1,11).
+        </div>
+      </div>
+    </div>
+
+    <!-- MARGEM DE LUCRO -->
+    <div class="card">
+      <div class="toggle-row" onclick="toggleBloco('lucro')">
+        <div class="toggle" id="tgl-lucro"></div>
+        <div class="toggle-info">
+          <div class="toggle-title">📈 Margem de lucro <span class="tag-opt">opcional</span></div>
+          <div class="toggle-desc">Quanto você quer ganhar sobre esta peça</div>
+        </div>
+      </div>
+      <div class="toggle-body" id="body-lucro">
+        <div class="field-grid">
+          <div class="field">
+            <label>Margem desejada</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="margem" placeholder="Ex: 100" min="0" step="1" oninput="calcular()">
+              <span class="suffix">%</span>
+            </div>
+            <div class="hint">100% = dobrar o custo total da peça</div>
+          </div>
+          <div class="field">
+            <label>Ou valor fixo de lucro</label>
+            <div class="input-wrap has-prefix">
+              <span class="prefix">R$</span>
+              <input type="number" id="lucro-fixo" placeholder="Ex: 15,00" min="0" step="0.01" oninput="calcular()">
+            </div>
+            <div class="hint">Se preencher os dois, o percentual tem prioridade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="result-section" id="resultado" style="display:none;">
+      <div class="result-mini-grid">
+        <div class="mini-card">
+          <div class="mini-label">Custo do banho</div>
+          <div class="mini-value" id="res-banho">R$ 0,00</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">Subtotal sem taxas</div>
+          <div class="mini-value" id="res-subtotal">R$ 0,00</div>
+        </div>
+      </div>
+
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="final-card">
+        <div class="final-label">Preço de custo da peça</div>
+        <div class="final-value" id="res-final">R$ 0,00</div>
+        <div class="final-sub" id="res-sub"></div>
+      </div>
+    </div>
+
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">✦</div>
+      <p>Preencha o peso, tipo de banho e custo do bruto<br>para ver o resultado em tempo real.</p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Ferramenta gratuita desenvolvida pela <a href="/">Scarlat Galvânica</a> para o setor de semijoias e folheados.<br>
+    Os valores calculados são estimativas baseadas nos dados inseridos pelo usuário.
+  </footer>
+
+  <script>
+    const blocos = { verniz: false, frete: false, op: false, lucro: false };
+
+    function toggleBloco(key) {
+      blocos[key] = !blocos[key];
+      document.getElementById('tgl-' + key).classList.toggle('on', blocos[key]);
+      document.getElementById('body-' + key).classList.toggle('open', blocos[key]);
+      calcular();
+    }
+
+    function atualizarBadge() {
+      const v = document.getElementById('tipo-banho').value;
+      const badge = document.getElementById('banho-badge');
+      const nomes = { ouro: 'Ouro', prata: 'Prata', diamante: 'Diamante' };
+      badge.textContent = nomes[v];
+      badge.className = 'banho-badge badge-' + v;
+    }
+
+    function fmt(v) {
+      return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function fmtN(v, d) { return v.toFixed(d).replace('.', ','); }
+
+    function calcular() {
+      const peso     = parseFloat(document.getElementById('peso').value) || 0;
+      const precoKg  = parseFloat(document.getElementById('preco-kg').value) || 0;
+      const mil      = document.getElementById('milesimos').value;
+      const bruto    = parseFloat(document.getElementById('custo-bruto').value) || 0;
+      const precoG   = precoKg / 1000;
+
+      // Conversão banho
+      const convBanho = document.getElementById('conv-banho');
+      if (precoKg > 0 && peso > 0) {
+        convBanho.classList.add('visible');
+        document.getElementById('cb-kg').textContent   = precoKg.toLocaleString('pt-BR');
+        document.getElementById('cb-g').textContent    = fmtN(precoG, 4);
+        document.getElementById('cb-peso').textContent = fmtN(peso, 1);
+        document.getElementById('cb-total').textContent = fmtN(precoG * peso, 2);
+      } else {
+        convBanho.classList.remove('visible');
+      }
+
+      // Verniz
+      let custoVerniz = 0;
+      if (blocos.verniz) {
+        const vKg = parseFloat(document.getElementById('verniz-kg').value) || 0;
+        const vG  = vKg / 1000;
+        const convV = document.getElementById('conv-verniz');
+        if (vKg > 0 && peso > 0) {
+          custoVerniz = vG * peso;
+          convV.classList.add('visible');
+          document.getElementById('cv-kg').textContent   = vKg.toLocaleString('pt-BR');
+          document.getElementById('cv-g').textContent    = fmtN(vG, 4);
+          document.getElementById('cv-peso').textContent = fmtN(peso, 1);
+          document.getElementById('cv-total').textContent = fmtN(custoVerniz, 2);
+        } else {
+          convV.classList.remove('visible');
+        }
+      }
+
+      if (!peso || !precoKg || !bruto) {
+        document.getElementById('resultado').style.display = 'none';
+        document.getElementById('placeholder').style.display = 'block';
+        return;
+      }
+
+      const custoBanho = precoG * peso;
+      let subtotal = custoBanho + bruto + custoVerniz;
+      const rows = [];
+
+      rows.push({ label: 'Custo do bruto (peça crua)', value: bruto });
+      rows.push({ label: `Banho ${mil} milésimos — R$ ${precoKg.toLocaleString('pt-BR')}/kg ÷ 1.000 × ${fmtN(peso,1)}g`, value: custoBanho });
+      if (custoVerniz > 0) {
+        const vKg = parseFloat(document.getElementById('verniz-kg').value) || 0;
+        rows.push({ label: `Verniz — R$ ${vKg.toLocaleString('pt-BR')}/kg ÷ 1.000 × ${fmtN(peso,1)}g`, value: custoVerniz, cls: 'c-verniz' });
+      }
+
+      // Frete
+      if (blocos.frete) {
+        const fT = parseFloat(document.getElementById('frete-total').value) || 0;
+        const fQ = parseFloat(document.getElementById('frete-qtd').value) || 1;
+        const fp = fT / Math.max(fQ, 1);
+        if (fp > 0) {
+          subtotal += fp;
+          rows.push({ label: `Frete por peça (R$ ${fmtN(fT,2)} ÷ ${Math.round(fQ)} peças)`, value: fp });
+        }
+      }
+
+      // Custos fixos operacionais
+      let comissao = 0, taxaCartao = 0, imposto = 0;
+      if (blocos.op) {
+        const cartela  = parseFloat(document.getElementById('cartela').value) || 0;
+        const saquinho = parseFloat(document.getElementById('saquinho').value) || 0;
+        const mkt      = parseFloat(document.getElementById('mkt').value) || 0;
+        comissao   = parseFloat(document.getElementById('comissao').value) || 0;
+        taxaCartao = parseFloat(document.getElementById('taxa-cartao').value) || 0;
+        imposto    = parseFloat(document.getElementById('imposto').value) || 0;
+
+        if (cartela  > 0) { subtotal += cartela;  rows.push({ label: 'Cartela / etiqueta',   value: cartela }); }
+        if (saquinho > 0) { subtotal += saquinho; rows.push({ label: 'Saquinho / embalagem', value: saquinho }); }
+        if (mkt      > 0) { subtotal += mkt;      rows.push({ label: 'Marketing / fotos',    value: mkt }); }
+
+        const temMarkup = comissao > 0 || taxaCartao > 0 || imposto > 0;
+        document.getElementById('markup-info').classList.toggle('visible', temMarkup);
+      } else {
+        document.getElementById('markup-info').classList.remove('visible');
+      }
+
+      // Markup correto: divisor
+      const totalPerc = (comissao + taxaCartao + imposto) / 100;
+      let precoCusto = (totalPerc > 0 && totalPerc < 1) ? subtotal / (1 - totalPerc) : subtotal;
+
+      if (blocos.op) {
+        if (comissao   > 0) rows.push({ label: `Comissão (${comissao}% sobre o preço final) — acréscimo necessário`,    value: precoCusto * (comissao / 100),   cls: 'c-markup' });
+        if (taxaCartao > 0) rows.push({ label: `Taxa cartão/Pix (${taxaCartao}% sobre o preço final) — acréscimo`,       value: precoCusto * (taxaCartao / 100), cls: 'c-markup' });
+        if (imposto    > 0) rows.push({ label: `Imposto/simples (${imposto}% sobre o preço final) — acréscimo`,          value: precoCusto * (imposto / 100),    cls: 'c-markup' });
+      }
+
+      // Lucro
+      let temLucro = false;
+      const subDesc = [];
+      if (blocos.lucro) {
+        const margem   = parseFloat(document.getElementById('margem').value) || 0;
+        const lucroFix = parseFloat(document.getElementById('lucro-fixo').value) || 0;
+        if (margem > 0) {
+          const lv = precoCusto * (margem / 100);
+          precoCusto += lv;
+          rows.push({ label: `Margem de lucro (${margem}%)`, value: lv, cls: 'c-lucro' });
+          temLucro = true; subDesc.push(`lucro de ${margem}% incluído`);
+        } else if (lucroFix > 0) {
+          precoCusto += lucroFix;
+          rows.push({ label: 'Margem de lucro (valor fixo)', value: lucroFix, cls: 'c-lucro' });
+          temLucro = true; subDesc.push(`lucro fixo de ${fmt(lucroFix)} incluído`);
+        }
+      }
+
+      // Render
+      document.getElementById('res-banho').textContent   = fmt(custoBanho);
+      document.getElementById('res-subtotal').textContent = fmt(subtotal);
+      document.getElementById('res-final').textContent   = fmt(precoCusto);
+
+      const resSub = document.getElementById('res-sub');
+      const partes = [];
+      if (totalPerc > 0) partes.push(`taxas de ${(totalPerc*100).toFixed(1)}% embutidas`);
+      if (temLucro)       partes.push(...subDesc);
+      resSub.textContent = partes.join(' · ');
+
+      let html = '';
+      rows.forEach(r => {
+        html += `<div class="breakdown-row">
+          <span class="breakdown-label ${r.cls || ''}">${r.label}</span>
+          <span class="breakdown-val ${r.cls || ''}">${fmt(r.value)}</span>
+        </div>`;
+      });
+      html += `<div class="breakdown-total"><span>Preço de custo da peça</span><span>${fmt(precoCusto)}</span></div>`;
+      document.getElementById('breakdown').innerHTML = html;
+
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('placeholder').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
