@@ -649,6 +649,10 @@
       <div class="final-card">
         <div class="final-label">Preço de custo da peça</div>
         <div class="final-value" id="res-final">R$ 0,00</div>
+        <div id="bloco-venda" style="display:none; margin-top:1.5rem;">
+          <div class="final-label" style="color:var(--gold);">Preço sugerido de venda</div>
+          <div class="final-value" id="res-venda" style="color:var(--gold);">R$ 0,00</div>
+        </div>
         <div class="final-sub" id="res-sub"></div>
       </div>
     </div>
@@ -817,6 +821,7 @@
       const subDesc = [];
       if (blocos.lucro) {
         const margem   = parseFloat(document.getElementById('margem').value) || 0;
+        const custoPuro = precoCusto; // salva custo antes da margem
         const lucroFix = parseFloat(document.getElementById('lucro-fixo').value) || 0;
         if (margem > 0) {
           const lv = precoCusto * (margem / 100);
@@ -833,7 +838,24 @@
       // Render
       document.getElementById('res-banho').textContent   = fmt(custoBanho);
       document.getElementById('res-subtotal').textContent = fmt(subtotal);
-      document.getElementById('res-final').textContent   = fmt(precoCusto);
+      // Separa custo puro (sem margem) do preço de venda
+      let custoFinal = precoCusto;
+      let precoVenda = 0;
+      const _margem = parseFloat(document.getElementById('margem').value) || 0;
+      if (_margem > 0) {
+        // precoCusto já inclui a margem somada no loop acima
+        // precisamos recalcular: custoPuro é antes da margem
+        // custo sem margem = precoCusto / (1 + _margem/100)
+        custoFinal = precoCusto / (1 + _margem / 100);
+        precoVenda = precoCusto;
+      }
+      document.getElementById('res-final').textContent = fmt(custoFinal);
+      if (_margem > 0) {
+        document.getElementById('res-venda').textContent = fmt(precoVenda);
+        document.getElementById('bloco-venda').style.display = 'block';
+      } else {
+        document.getElementById('bloco-venda').style.display = 'none';
+      }
 
       const resSub = document.getElementById('res-sub');
       const partes = [];
